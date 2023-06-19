@@ -290,9 +290,10 @@ class YoutubeVideo(YouTubeItem, YoutubeSubtitle):
 
         return vid_path
 
+    # TODO: update this with the channel id in the path
     def add_file_path(self):
         """build media_url for where file will be located"""
-        channel_name = self.json_data["channel"]["channel_name"]
+        channel_name = self.json_data["channel_id"]["channel"]["channel_name"]
         clean_channel_name = clean_string(channel_name)
         if len(clean_channel_name) <= 3:
             # fall back to channel id
@@ -302,7 +303,7 @@ class YoutubeVideo(YouTubeItem, YoutubeSubtitle):
         youtube_id = self.json_data["youtube_id"]
         title = self.json_data["title"]
         clean_title = clean_string(title)
-        filename = f"{timestamp}_{youtube_id}_{clean_title}.mp4"
+        filename = f"S{timestamp}_{youtube_id}_{clean_title}.mp4"
         media_url = os.path.join(clean_channel_name, filename)
         self.json_data["media_url"] = media_url
 
